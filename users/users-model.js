@@ -12,9 +12,16 @@ function find() {
 }
 
 function findBy(filter) {
+  console.log(filter);
   return db('users')
     .select('id', 'username', 'password')
     .where(filter);
+
+  /*
+  SELECT id, username, password
+  FROM users 
+  WHERE username = 'sk4'
+  */
 }
 
 function add(user) {

@@ -14,3 +14,11 @@ Guided project for **Web Auth I** Module.
 - [ ] type `npm run server` to start the API.
 
 Please follow along as the instructor adds authentication to the API.
+
+## Files with notes:
+- ./api/api-router.js
+- ./api/configure-middleware.js
+- ./api/server.js
+- ./auth/auth-required-middleware.js
+- ./auth/auth-router.js
+- ./users/users/users-router.js
