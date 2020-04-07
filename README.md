@@ -30,9 +30,9 @@ When making changes to the `master` branch, commit the changes and use `git push
 - use sessions to protect access to resources.
 - use a database to store sessions.
 
-## Introduce Module Challenge
+## 0730 - Introduce Module Challenge : 5 min
 
-## Introduce Authentication and Authorization
+## - 0735 - Introduce Authentication and Authorization : 5 min
 
 Open TK and provide an introduction to `Authentication` and `Authorization` and highlight the difference.
 
@@ -40,16 +40,64 @@ Cover things to consider when storing passwords.
 
 - `hashing` vs `encryptiion`.
 
-## Hash User Passwords
+## - 0740 - Hash User Passwords
 
 - introduce the library we'll use to hash passwords.
 - add [bcryptjs](https://www.npmjs.com/package/bcryptjs) to the project.
 - require `bcryptjs` at the top of `index.js`.
 
+### create ./auth and ./auth/auth-router.js
+copy/past from ./users/users-router.js to start
+
 ```js
-// .. other requires
-const cors = require("cors");
-const bcrypt = require("bcryptjs");
+const router = require("express").Router();
+
+const Users = require("./users-model.js");
+
+router.get("/", (req, res) => {
+  Users.find()
+    .then(users => {
+      res.json(users);
+    })
+    .catch(err => res.send(err));
+});
+
+module.exports = router;
+```
+
+Change users module reference:
+
+```js
+const Users = require("../users/users-router.js");
+```
+
+Change router.get("/") to router.post("/register")
+
+Add bcryptjs:
+
+```sh
+npm i bcryptjs
+```
+
+add bcryptjs to the code:
+
+```js
+const router = require("bcryptjs")
+```
+
+modify router.post("/register") to create and use a hash using bcryptjs:
+
+```js
+router.post("/register", (req, res) => {
+    const { username, password } = req.body;
+    const hash = bcrypt.hashSync(password, 8);
+
+    Users.add(req.body)
+        .then(users => {
+            res.json(users);
+        })
+        .catch(err => res.send(err));
+});
 ```
 
 - change the `POST /api/register` to this:
