@@ -1,4 +1,4 @@
-const db = require("../database/connection.js");
+const db = require("../../database/connection.js");
 
 module.exports = {
   add,
@@ -16,13 +16,8 @@ function findBy(filter) {
 }
 
 async function add(user) {
-  try {
-    const [id] = await db("users").insert(user, "id");
-
-    return findById(id);
-  } catch (error) {
-    throw error;
-  }
+  const [id] = await db("users").insert(user, "id");
+  return findById(id);
 }
 
 function findById(id) {
