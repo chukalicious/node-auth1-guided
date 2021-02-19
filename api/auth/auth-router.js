@@ -53,4 +53,18 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/logout", (req, res) => {
+  if (req.session) {
+    req.session.destroy((err) => {
+      if (err) {
+        res.send("could not log out");
+      } else {
+        res.send("you've left Middle Earth");
+      }
+    });
+  } else {
+    res.end();
+  }
+});
+
 module.exports = router;

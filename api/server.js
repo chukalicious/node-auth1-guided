@@ -5,6 +5,9 @@ const cors = require("cors");
 //import session
 const session = require("express-session");
 
+//import connect session to store session in the database
+const knexSessionStore = require("connect-session-knex")(session);
+
 const usersRouter = require("./users/users-router.js");
 const authRouter = require("./auth/auth-router");
 
@@ -21,6 +24,17 @@ const sessionConfig = {
   },
   resave: false, //for data store stuff
   saveUninitialized: false, //that law thing
+
+  //create this for when storing session in the database
+  //and configure it as below:
+  store: new knexSessionStore({
+    //pull in the database
+    knex: require("../database/connection"),
+    table: "sessions",
+    sidfieldname: "sid",
+    createtable: true,
+    cleanIntervals: 60 * 60 * 1000,
+  }),
 };
 
 server.use(helmet());
